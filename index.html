@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar with Logo</title>
+    <title>GorillaTag Modding Guide</title>
     <style>
         * {
             margin: 0;
@@ -13,17 +13,21 @@
         }
 
         body {
-            background: #2a2f3a; /* Slightly lighter gray */
+            background: #2a2f3a;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            justify-content: center;
             height: 100vh;
+            width: 100vw;
+            transition: padding-left 0.3s ease-in-out;
+            padding-top: 20px;
         }
 
-        /* Sidebar styles */
+        /* Sidebar */
         .sidebar {
             width: 250px;
             height: 100vh;
-            background: #1f2631; /* Darker gray */
+            background: #1f2631;
             color: white;
             position: fixed;
             left: 0;
@@ -42,22 +46,50 @@
         /* Logo */
         .logo {
             width: 80%;
-            max-width: 150px;
+            max-width: 125px;
+            margin-bottom: 10px;
+        }
+
+        /* Thin line under logo */
+        .separator {
+            width: 80%;
+            height: 2px;
+            background: #39404d;
             margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        /* Sidebar Links */
+        .sidebar a {
+            color: #b0b3b8;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #2a2f3a;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #39404d;
         }
 
         /* Toggle button */
         .toggle-btn {
             position: fixed;
-            left: 250px; /* Moves with sidebar */
+            left: 260px;
             top: 20px;
-            padding: 10px 15px;
+            padding: 12px 18px;
             background: #1f2631;
             color: white;
             border: none;
             cursor: pointer;
             transition: background 0.3s, left 0.3s ease-in-out;
             border-radius: 5px;
+            font-size: 1.4rem;
         }
 
         .toggle-btn:hover {
@@ -68,20 +100,88 @@
         .sidebar.hidden + .toggle-btn {
             left: 10px;
         }
+
+        /* Intro Section (Title + Text) */
+        .intro {
+            width: 50%;
+            max-width: 800px;
+            color: white;
+            text-align: left;
+            position: absolute;
+            top: 20px;
+            left: calc(50% + 50px);
+            transform: translateX(-50%);
+            transition: left 0.3s ease-in-out;
+        }
+
+        .intro h1 {
+            font-size: 2.5rem;
+            font-family: Segoe UI, monospace;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .intro .separator {
+            width: 100%;
+            height: 2px;
+            background: #39404d;
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #b0b3b8; /* Light gray */
+        }
+
+        /* Adjust position when sidebar is closed */
+        .sidebar.hidden ~ .intro {
+            left: calc(50% - 75px);
+        }
     </style>
 </head>
 <body>
 
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <img src="Icons/logo.png" alt="Logo" class="logo">
+        <div class="separator"></div>
+        <!-- Sidebar Links -->
+        <a href="#">Introduction</a>
+        <a href="#/troubleshooting/">Troubleshooting</a>
     </div>
 
-    <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">Toggle</button>
+    <!-- Sidebar Toggle Button -->
+    <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">=</button>
+
+    <!-- Intro Section -->
+    <div class="intro" id="intro">
+        <br>
+        <h1>Gorilla Tag Modding Guide</h1>
+        <br>
+        <div class="separator"></div>
+        <br>
+        <p>
+            Get up and running with modifications to Gorilla Tag to enhance your experience.
+            Reject humanity, return to monke.
+        </p>
+    </div>
+    <div id="mods" class="mods" style="display: none;">
+        <h1>Mods</h1>
+        <p>Explore different mods for Gorilla Tag.</p>
+    </div>
 
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
+            const intro = document.getElementById('intro');
             sidebar.classList.toggle('hidden');
+
+            if (sidebar.classList.contains('hidden')) {
+                intro.style.left = "calc(50% - 75px)"; // Adjust position when sidebar is closed
+            } else {
+                intro.style.left = "calc(50% + 50px)"; // Reset position when sidebar is open
+            }
         }
     </script>
 

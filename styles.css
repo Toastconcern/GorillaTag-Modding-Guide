@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #2a2f3a;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    transition: padding-left 0.3s ease-in-out;
+    padding-top: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #1f2631;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease-in-out;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+/* Logo */
+.logo {
+    width: 80%;
+    max-width: 125px;
+    margin-bottom: 10px;
+}
+
+/* Thin line under logo */
+.separator {
+    width: 80%;
+    height: 2px;
+    background: #39404d;
+    margin-bottom: 20px;
+    border-radius: 2px;
+}
+
+/* Sidebar Links */
+.sidebar a {
+    color: #b0b3b8;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #2a2f3a;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #39404d;
+}
+
+/* Toggle button */
+.toggle-btn {
+    position: fixed;
+    left: 260px;
+    top: 20px;
+    padding: 12px 18px;
+    background: #1f2631;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, left 0.3s ease-in-out;
+    border-radius: 5px;
+    font-size: 1.4rem;
+}
+
+.toggle-btn:hover {
+    background: #2a2f3a;
+}
+
+/* Move button when sidebar is hidden */
+.sidebar.hidden + .toggle-btn {
+    left: 10px;
+}
