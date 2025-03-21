@@ -19,7 +19,6 @@
             justify-content: center;
             height: 100vh;
             width: 100vw;
-            transition: padding-left 0.3s ease-in-out;
             padding-top: 20px;
         }
 
@@ -32,25 +31,23 @@
             position: fixed;
             left: 0;
             top: 0;
-            transition: transform 0.3s ease-in-out;
             padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: left 0.3s ease-in-out;
         }
 
         .sidebar.hidden {
-            transform: translateX(-100%);
+            left: -250px;
         }
 
-        /* Logo */
         .logo {
             width: 80%;
             max-width: 125px;
             margin-bottom: 10px;
         }
 
-        /* Thin line under logo */
         .separator {
             width: 80%;
             height: 2px;
@@ -59,7 +56,6 @@
             border-radius: 2px;
         }
 
-        /* Sidebar Links */
         .sidebar a {
             color: #b0b3b8;
             text-decoration: none;
@@ -96,47 +92,14 @@
             background: #2a2f3a;
         }
 
-        /* Move button when sidebar is hidden */
-        .sidebar.hidden + .toggle-btn {
-            left: 10px;
-        }
-
-        /* Intro Section (Title + Text) */
-        .intro {
-            width: 50%;
-            max-width: 800px;
-            color: white;
-            text-align: left;
-            position: absolute;
-            top: 20px;
-            left: calc(50% + 50px);
-            transform: translateX(-50%);
-            transition: left 0.3s ease-in-out;
-        }
-
-        .intro h1 {
-            font-size: 2.5rem;
-            font-family: Segoe UI, monospace;
-            font-weight: normal;
-            margin-bottom: 10px;
-        }
-
-        .intro .separator {
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
             width: 100%;
-            height: 2px;
-            background: #39404d;
-            margin-bottom: 15px;
-        }
-
-        .intro p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #b0b3b8; /* Light gray */
-        }
-
-        /* Adjust position when sidebar is closed */
-        .sidebar.hidden ~ .intro {
-            left: calc(50% - 75px);
+            max-width: 800px;
+            margin-left: 270px;
+            padding: 20px;
+            color: white;
         }
     </style>
 </head>
@@ -147,40 +110,78 @@
         <img src="Icons/logo.png" alt="Logo" class="logo">
         <div class="separator"></div>
         <!-- Sidebar Links -->
-        <a href="#">Introduction</a>
-        <a href="#/troubleshooting/">Troubleshooting</a>
+        <a href="#/intro/" onclick="loadPage('intro.html')">Introduction</a>
+        <a href="#/troubleshooting/" onclick="loadPage('troubleshooting.html')">Troubleshooting</a>
     </div>
 
     <!-- Sidebar Toggle Button -->
-    <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">=</button>
+    <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">×</button>
 
-    <!-- Intro Section -->
-    <div class="intro" id="intro">
-        <br>
-        <h1>Gorilla Tag Modding Guide</h1>
-        <br>
-        <div class="separator"></div>
-        <br>
-        <p>
-            Get up and running with modifications to Gorilla Tag to enhance your experience.
-            Reject humanity, return to monke.
-        </p>
-    </div>
-    <div id="mods" class="mods" style="display: none;">
-        <h1>Mods</h1>
-        <p>Explore different mods for Gorilla Tag.</p>
+    <!-- Main Content Area -->
+    <div class="main-content" id="mainContent">
     </div>
 
     <script>
+        // Load the correct page based on URL hash
+        window.onload = function() {
+            const hash = window.location.hash;
+            if (hash) {
+                loadPageByHash(hash);
+            } else {
+                // If no hash, load the default page
+                loadPage('intro.html');
+            }
+        }
+
+        function loadPageByHash(hash) {
+            let page = '';
+            if (hash === '#/troubleshooting/') {
+                page = 'troubleshooting.html';
+            } else if (hash === '#/intro/') {
+                page = 'intro.html';
+            } else {
+                // Default to intro.html if the hash doesn't match any page
+                page = 'intro.html';
+            }
+
+            loadPage(page);
+        }
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const intro = document.getElementById('intro');
+            const toggleBtn = document.getElementById('toggleBtn');
             sidebar.classList.toggle('hidden');
-
+            // Switch the button text between "×" (close) and "=" (open)
             if (sidebar.classList.contains('hidden')) {
-                intro.style.left = "calc(50% - 75px)"; // Adjust position when sidebar is closed
+                toggleBtn.innerText = '=';  // Open icon
             } else {
-                intro.style.left = "calc(50% + 50px)"; // Reset position when sidebar is open
+                toggleBtn.innerText = '×';  // Close icon
+            }
+        }
+
+        function loadPage(page) {
+            // Use the Fetch API to load the HTML page dynamically
+            fetch(page)
+                .then(response => response.text())
+                .then(html => {
+                    // Inject the fetched HTML into the main content area
+                    document.getElementById('mainContent').innerHTML = html;
+                    // Update the URL hash after loading the page
+                    window.location.hash = hashPage(page);
+                })
+                .catch(error => {
+                    console.error("Error loading page:", error);
+                    document.getElementById('mainContent').innerHTML = `<h1>Error loading page.</h1>`;
+                });
+        }
+
+        function hashPage(page) {
+            if (page === 'troubleshooting.html') {
+                return '#/troubleshooting/';
+            } else if (page === 'intro.html') {
+                return '#/intro/';
+            } else {
+                return '#/';
             }
         }
     </script>
