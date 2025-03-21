@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar with Moving Button</title>
+    <title>Sidebar with Logo</title>
     <style>
         * {
             margin: 0;
@@ -30,10 +30,20 @@
             top: 0;
             transition: transform 0.3s ease-in-out;
             padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .sidebar.hidden {
             transform: translateX(-100%);
+        }
+
+        /* Logo */
+        .logo {
+            width: 80%;
+            max-width: 150px;
+            margin-bottom: 20px;
         }
 
         /* Toggle button */
@@ -63,6 +73,7 @@
 <body>
 
     <div class="sidebar" id="sidebar">
+        <img src="icons/logo.png" alt="Logo" class="logo">
     </div>
 
     <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">Toggle</button>
