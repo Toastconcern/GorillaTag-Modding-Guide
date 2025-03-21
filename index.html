@@ -148,16 +148,20 @@
         }
 
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const toggleBtn = document.getElementById('toggleBtn');
-            sidebar.classList.toggle('hidden');
-            // Switch the button text between "×" (close) and "=" (open)
-            if (sidebar.classList.contains('hidden')) {
-                toggleBtn.innerText = '=';  // Open icon
-            } else {
-                toggleBtn.innerText = '×';  // Close icon
-            }
-        }
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleBtn');
+    
+    sidebar.classList.toggle('hidden');
+
+    if (sidebar.classList.contains('hidden')) {
+        toggleBtn.innerText = '=';
+        toggleBtn.style.left = '10px'; // Move button to the left when sidebar is hidden
+    } else {
+        toggleBtn.innerText = '×';
+        toggleBtn.style.left = '260px'; // Move button back when sidebar is shown
+    }
+}
+
 
         function loadPage(page) {
             // Use the Fetch API to load the HTML page dynamically
